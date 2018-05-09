@@ -2,13 +2,10 @@ package com.BU.CIB30;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.swing.*;
-/**
- * @author s5009373
- * CREATE BASIC GUI
- * FOREGROUND/BACKGROUND FORMATTING
- * SCREENSIZE 1200x1080
- */
 
 public class testGUI {
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
@@ -17,8 +14,11 @@ public class testGUI {
 	private JFrame applicationFrame;
 	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel;
 	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny;
-	private JTextField applicationUser, applicationPass, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription;
+	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription;
 	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive;
+	private JPasswordField applicationPass;
+	public String clockinTime;
+	private testNoGUI method = new testNoGUI();
 	
 	private void createApplicationFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -95,6 +95,7 @@ public class testGUI {
 		
 		adminClockIn = new JButton("Clock In");
 		adminClockIn.setBounds(270, 340, 90, 35);
+		adminClockIn.addActionListener(new clockinHandler());
 		adminPanel.add(adminClockIn);
 		
 		adminClockOut = new JButton("Clock Out");
@@ -148,13 +149,6 @@ public class testGUI {
 		applicationUser.setFont(new Font("Serif", Font.PLAIN, 13));
 		applicationPanel.add(applicationUser);
 		
-		applicationPass = new JTextField();
-		applicationPass.setBounds(350, 250, 100, 30);
-		applicationPass.setBackground(Color.LIGHT_GRAY);
-		applicationPass.setForeground(Color.DARK_GRAY);
-		applicationPass.setFont(new Font("Serif", Font.PLAIN, 13));
-		applicationPanel.add(applicationPass);
-		
 		employeeWorkCode = new JTextField();
 		employeeWorkCode.setBounds(315, 185, 120, 34);
 		employeeWorkCode.setBackground(Color.GRAY);
@@ -182,6 +176,15 @@ public class testGUI {
 		adminDescription.setForeground(Color.WHITE);
 		adminDescription.setFont(new Font("Arial", Font.PLAIN,15));
 		adminPanel.add(adminDescription);
+	}
+
+	public void createJPasswordField() {
+		applicationPass = new JPasswordField(10);
+		applicationPass.setBounds(350, 250, 100, 30);
+		applicationPass.setBackground(Color.LIGHT_GRAY);
+		applicationPass.setForeground(Color.DARK_GRAY);
+		applicationPass.setFont(new Font("Serif", Font.PLAIN, 13));
+		applicationPanel.add(applicationPass);
 	}
 	
 	public void createJLabel() {
@@ -268,6 +271,7 @@ public class testGUI {
 		createJButton();
 		createJTextField();
 		createJLabel();
+		createJPasswordField();
 		
 		applicationFrame.add(applicationPanel);
 		applicationFrame.add(employeePanel);
@@ -292,6 +296,7 @@ public class testGUI {
 	}
 	
 	class loginHandler implements ActionListener {
+		@SuppressWarnings("deprecation")
 		public void actionPerformed(ActionEvent e) {
 			if (applicationUser.getText().equals("Emp") && applicationPass.getText().equals("pass")) {
 				System.out.println("Go to Emp panel!");
@@ -305,6 +310,7 @@ public class testGUI {
 				applicationFrame.validate();
 			} else {
 				System.out.println("Wrong login info");
+				JOptionPane.showMessageDialog(null, "Username and password don't match", "Login Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -332,5 +338,28 @@ public class testGUI {
 			applicationFrame.validate();
 		}
 	}
-
+	
+	class clockinHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			getHour(clockinTime);
+			System.out.println(clockinTime);
+		}
+	}
+	
+	public String getHour(String theValue) {
+		theValue = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
+		
+		if (Integer.parseInt(theValue) >= 30) {
+			
+			theValue = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+			theValue = String.valueOf(Integer.parseInt(theValue) + 1);
+			
+		} else {
+			
+			theValue = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+		
+		}
+		System.out.println(theValue);
+		return theValue;
+	}
 }
