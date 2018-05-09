@@ -1,59 +1,55 @@
 package com.BU.CIB30;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-public class GUI {
+public class testGUI {
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
 	Color testColor = new Color(255, 255, 255);
-	
+
 	private JFrame applicationFrame;
-	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel;
-	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, adminAssignment;
-	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription;
-	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive;
+	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel, assignmentPanel, reportSearchPanel;
+	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, assignmentExitButton, assignmentLogOutButton, assignmentBackButton, assignmentAssign, assignmentBack, adminAssignment, reportSearchButton, reportSearchLogOut, reportSearchExit, reportSearchBack;
+	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription, reportSearchTextField;
+	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo;
 	private JPasswordField applicationPass;
-	private JComboBox<String> adminComboBox;
-	public String clockinTime;
-	//private testNoGUI method = new testNoGUI();
-	
+	private JComboBox<String> employeeComboBox, projectCodeComboBox, reportSearchComboBox;
+	private boolean clockOut = false;
+	private String clockinTime, empCode, workCode, projCode, clockinDate, clockinHour, clockStore, clockoutHour, totalHour, clockoutTime;
+	ArrayList<String> toApprove = new ArrayList<String>();
+
 	private void createApplicationFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
+
 		applicationPanel = new JPanel();
 		applicationPanel.setBackground(new Color(158, 158, 157));
 		applicationPanel.setLayout(null);
 		applicationPanel.setVisible(true);
-		
+
 		employeePanel = new JPanel();
 		employeePanel.setLayout(null);
 		employeePanel.setBackground(new Color(158, 158, 157));
-		
+
 		adminPanel = new JPanel();
 		adminPanel.setLayout(null);
 		adminPanel.setBackground(new Color(158, 158, 157));
-		
+
 		approvalPanel = new JPanel();
 		approvalPanel.setLayout(null);
 		approvalPanel.setBackground(Color.GRAY);
-		
+
+		assignmentPanel = new JPanel();
+		assignmentPanel.setLayout(null);
+		assignmentPanel.setBackground(Color.LIGHT_GRAY);
+
+		reportSearchPanel = new JPanel();
+		reportSearchPanel.setLayout(null);
+		reportSearchPanel.setBackground(Color.GRAY);
+
 		applicationFrame = new JFrame("Design & Solutions Co");
 		applicationFrame.setSize(800, 600);
 		applicationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,7 +57,7 @@ public class GUI {
 		applicationFrame.setVisible(true);
 		applicationFrame.setResizable(false);
 	}
-	
+
 	public void createJButton() {
 		applicationLogIn = new JButton("Log In");
 		applicationLogIn.setBounds(350, 300, 100, 20);
@@ -70,7 +66,7 @@ public class GUI {
 		applicationLogIn.setFont(new Font("Serif", Font.PLAIN, 13));
 		applicationLogIn.addActionListener(new loginHandler());
 		applicationPanel.add(applicationLogIn);
-		
+
 		applicationExit = new JButton("Exit");
 		applicationExit.setBounds(700, 50, 60, 30);
 		applicationExit.setBackground(Color.GRAY);
@@ -78,68 +74,67 @@ public class GUI {
 		applicationExit.setFont(new Font("Serif", Font.PLAIN, 10));
 		applicationExit.addActionListener(new exitHandler());
 		applicationPanel.add(applicationExit);
-		
+
 		employeeHelp = new JButton("Help");
 		employeeHelp.setBounds(450, 225, 70, 35);
 		employeeHelp.addActionListener(new helpHandler());
 		employeePanel.add(employeeHelp);
-		
+
 		employeeClockIn = new JButton("Clock In");
 		employeeClockIn.setBounds(270, 340, 90, 35);
+		employeeClockIn.addActionListener(new clockinHandler2());
 		employeePanel.add(employeeClockIn);
-		
+
 		employeeClockOut = new JButton("Clock Out");
 		employeeClockOut.setBounds(380, 340, 90, 35);
+		employeeClockOut.addActionListener(new clockoutHandler2());
 		employeePanel.add(employeeClockOut);
-		
+
 		employeeExit = new JButton("Exit");
 		employeeExit.setBounds(680, 17, 90, 35);
 		employeeExit.addActionListener(new exitHandler());
 		employeePanel.add(employeeExit);
-		
+
 		employeeLogOut = new JButton("Log Out");
 		employeeLogOut.setBounds(580, 17, 90, 35);
 		employeeLogOut.addActionListener(new backHandler());
 		employeePanel.add(employeeLogOut);
-		
-		adminAssignment = new JButton("Assignment");
-		adminAssignment.setBounds(300, 500, 150, 35);
-		adminPanel.add(adminAssignment);
-		
+
 		adminHelp = new JButton("Help");
 		adminHelp.setBounds(450, 225, 70, 35);
 		adminHelp.addActionListener(new helpHandler());
 		adminPanel.add(adminHelp);
-		
+
 		adminClockIn = new JButton("Clock In");
 		adminClockIn.setBounds(270, 340, 90, 35);
 		adminClockIn.addActionListener(new clockinHandler());
 		adminPanel.add(adminClockIn);
-		
+
 		adminClockOut = new JButton("Clock Out");
 		adminClockOut.setBounds(380, 340, 90, 35);
+		adminClockOut.addActionListener(new clockoutHandler());
 		adminPanel.add(adminClockOut);
-		
+
 		adminExit = new JButton("Exit");
 		adminExit.setBounds(680, 17, 90, 35);
 		adminExit.addActionListener(new exitHandler());
 		adminPanel.add(adminExit);
-		
+
 		adminLogOut = new JButton("Log Out");
 		adminLogOut.setBounds(580, 17, 90, 35);
 		adminLogOut.addActionListener(new backHandler());
 		adminPanel.add(adminLogOut);
-		
+
 		adminApproval = new JButton("Timesheet Review");
 		adminApproval.setBounds(300, 400, 150, 35);
 		adminApproval.addActionListener(new reviewHandler());
 		adminPanel.add(adminApproval);
-		
+
 		adminReport = new JButton("Report Review");
 		adminReport.setBounds(300, 450, 150, 35);
-		//adminReport.addActionListener(new reportHandler());
+		adminReport.addActionListener(new reportSearchHandler());
 		adminPanel.add(adminReport);
-		
+
 		approvalExit = new JButton("Exit");
 		approvalExit.setBounds(680, 17, 90, 35);
 		approvalExit.addActionListener(new exitHandler());
@@ -149,27 +144,64 @@ public class GUI {
 		approvalLogOut.setBounds(580, 17, 90, 35);
 		approvalLogOut.addActionListener(new backHandler());
 		approvalPanel.add(approvalLogOut);
-		
+
 		approvalConfirm = new JButton("Approve");
 		approvalConfirm.setBounds(285, 90, 90, 35);
 		approvalPanel.add(approvalConfirm);
-		
+
 		approvalDeny = new JButton("Deny");
 		approvalDeny.setBounds(385, 90, 90, 35);
 		approvalPanel.add(approvalDeny);
+
+		assignmentExitButton = new JButton("Exit");
+		assignmentExitButton.setBounds(680, 17, 90, 35);
+		assignmentExitButton.addActionListener(new exitHandler());
+		assignmentPanel.add(assignmentExitButton);
+
+		assignmentLogOutButton = new JButton("Log Out");
+		assignmentLogOutButton.setBounds(580, 17, 90, 35);
+		assignmentLogOutButton.addActionListener(new backHandler());
+		assignmentPanel.add(assignmentLogOutButton);
+
+		assignmentBackButton = new JButton("Back");
+		assignmentBackButton.setBounds(480, 17, 90, 35);
+		assignmentBackButton.addActionListener(new adminPanelHandler());
+		assignmentPanel.add(assignmentBackButton);
+
+		assignmentAssign = new JButton("Assign");
+		assignmentAssign.setBounds(317, 350, 90, 35);
+		assignmentPanel.add(assignmentAssign);
+
+		assignmentBack = new JButton("Back");
+		assignmentBack.setBounds(480, 17, 90, 35);
+		assignmentBack.addActionListener(new adminPanelHandler());
+		assignmentPanel.add(assignmentBack);
+
+		adminAssignment = new JButton("Assignment");
+		adminAssignment.setBounds(300, 500, 150, 35);
+		adminAssignment.addActionListener(new assignmentHandler());
+		adminPanel.add(adminAssignment);
+		
+		reportSearchButton = new JButton("Show");
+		reportSearchButton.setBounds(450, 280, 70, 30);
+		reportSearchPanel.add(reportSearchButton);
+
+		reportSearchLogOut = new JButton("Log Out");
+		reportSearchLogOut.setBounds(580, 17, 90, 35);
+		reportSearchLogOut.addActionListener(new backHandler());
+		reportSearchPanel.add(reportSearchLogOut);
+
+		reportSearchExit = new JButton("Exit");
+		reportSearchExit.setBounds(680, 17, 90, 35);
+		reportSearchExit.addActionListener(new exitHandler());
+		reportSearchPanel.add(reportSearchExit);
+		
+		reportSearchBack = new JButton("Back");
+		reportSearchBack.setBounds(480, 17, 90, 35);
+		reportSearchBack.addActionListener(new adminPanelHandler());
+		reportSearchPanel.add(reportSearchBack);
 	}
-	
-	public void createJComboBox() {
-		adminComboBox = new JComboBox<String>();
-		adminComboBox.addItem("Project 1");
-		adminComboBox.addItem("Project 2");
-		adminComboBox.addItem("Project 3");
-		adminComboBox.addItem("Project 4");
-		adminComboBox.addItem("Project 5");
-		adminComboBox.setBounds(170, 185, 120, 34);
-		adminPanel.add(adminComboBox);
-	}
-	
+
 	public void createJTextField() {
 		applicationUser = new JTextField();
 		applicationUser.setBounds(350, 175, 100, 30);
@@ -177,7 +209,7 @@ public class GUI {
 		applicationUser.setForeground(Color.DARK_GRAY);
 		applicationUser.setFont(new Font("Serif", Font.PLAIN, 13));
 		applicationPanel.add(applicationUser);
-		
+
 		employeeWorkCode = new JTextField();
 		employeeWorkCode.setBounds(315, 185, 120, 34);
 		employeeWorkCode.setBackground(Color.GRAY);
@@ -191,7 +223,7 @@ public class GUI {
 		employeeDescription.setForeground(Color.WHITE);
 		employeeDescription.setFont(new Font("Arial", Font.PLAIN,15));
 		employeePanel.add(employeeDescription);
-		
+
 		adminWorkCode = new JTextField();
 		adminWorkCode.setBounds(315, 185, 120, 34);
 		adminWorkCode.setBackground(Color.GRAY);
@@ -205,6 +237,11 @@ public class GUI {
 		adminDescription.setForeground(Color.WHITE);
 		adminDescription.setFont(new Font("Arial", Font.PLAIN,15));
 		adminPanel.add(adminDescription);
+		
+		reportSearchTextField = new JTextField("");
+		reportSearchTextField.setBackground(Color.GRAY);
+		reportSearchTextField.setBounds(290, 280, 150, 30);
+		reportSearchPanel.add(reportSearchTextField);
 	}
 
 	public void createJPasswordField() {
@@ -215,24 +252,24 @@ public class GUI {
 		applicationPass.setFont(new Font("Serif", Font.PLAIN, 13));
 		applicationPanel.add(applicationPass);
 	}
-	
+
 	public void createJLabel() {
 		applicationUserLabel = new JLabel("Username");
 		applicationUserLabel.setBounds(370, 150, 100, 30);
 		applicationUserLabel.setForeground(new Color(87, 86, 86));
 		applicationUserLabel.setFont(new Font("Serif", Font.PLAIN, 15));
 		applicationPanel.add(applicationUserLabel);
-		
+
 		applicationPassLabel = new JLabel("Password");
 		applicationPassLabel.setBounds(370, 225, 100, 30);
 		applicationPassLabel.setForeground(new Color(87, 86, 86));
 		applicationPassLabel.setFont(new Font("Serif", Font.PLAIN, 15));
 		applicationPanel.add(applicationPassLabel);
-		
+
 		applicationLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		applicationLogo.setBounds(40, 20, 200, 70);
 		applicationPanel.add(applicationLogo);
-		
+
 		employeeWorkCodeLabel = new JLabel("Work Code");
 		employeeWorkCodeLabel.setFont(mainFont);
 		employeeWorkCodeLabel.setBounds(310, 60, 200, 200);
@@ -244,11 +281,11 @@ public class GUI {
 		employeeDescriptionLabel.setFont(mainFont);
 		employeeDescriptionLabel.setForeground(Color.WHITE);
 		employeePanel.add(employeeDescriptionLabel);
-		
+
 		employeeLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		employeeLogo.setBounds(20, 20, 200, 70);
 		employeePanel.add(employeeLogo);
-		
+
 		adminWorkCodeLabel = new JLabel("Work Code");
 		adminWorkCodeLabel.setFont(mainFont);
 		adminWorkCodeLabel.setBounds(310, 60, 200, 200);
@@ -260,72 +297,125 @@ public class GUI {
 		adminDescriptionLabel.setFont(mainFont);
 		adminDescriptionLabel.setForeground(Color.WHITE);
 		adminPanel.add(adminDescriptionLabel);
-		
+
 		adminLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		adminLogo.setBounds(20, 20, 200, 70);
 		adminPanel.add(adminLogo);
-		
+
 		approvalLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		approvalLogo.setBounds(20, 20, 200, 70);
 		approvalPanel.add(approvalLogo);
-		
+
 		headerOne = new JLabel("Header1");
 		headerOne.setBounds(70, 130, 100, 100);
 		headerOne.setFont(mainFont);
 		approvalPanel.add(headerOne);
-		
+
 		headerTwo = new JLabel("Header2");
 		headerTwo.setBounds(200, 130, 100, 100);
 		headerTwo.setFont(mainFont);
 		approvalPanel.add(headerTwo);
-		
+
 		headerThree = new JLabel("Header3");
 		headerThree.setBounds(330, 130, 100, 100);
 		headerThree.setFont(mainFont);
 		approvalPanel.add(headerThree);
-		
+
 		headerFour = new JLabel("Header4");
 		headerFour.setBounds(460, 130, 100, 100);
 		headerFour.setFont(mainFont);
 		approvalPanel.add(headerFour);
-		
+
 		headerFive = new JLabel("Header5");
 		headerFive.setBounds(590, 130, 100, 100);
 		headerFive.setFont(mainFont);
 		approvalPanel.add(headerFive);
+
+		assignmentLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
+		assignmentLogo.setBounds(20, 20, 200, 70);
+		assignmentPanel.add(assignmentLogo);
+
+		unassignedEmployeeLabel = new JLabel("Currently unassigned employees");
+		unassignedEmployeeLabel.setBounds(230, -30, 400, 400);
+		unassignedEmployeeLabel.setFont(mainFont);
+		assignmentPanel.add(unassignedEmployeeLabel);
+
+		assignmentProjLabel = new JLabel("Project Codes");
+		assignmentProjLabel.setBounds(300, 170, 200, 200);
+		assignmentProjLabel.setFont(mainFont);
+		assignmentPanel.add(assignmentProjLabel);
+		
+		reportSearchLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
+		reportSearchLogo.setBounds(20, 20, 200, 70);
+		reportSearchPanel.add(reportSearchLogo);
+		
+		reportSearchLabel = new JLabel("Search Parameter");
+		reportSearchLabel.setBounds(285, 230, 300, 30);
+		reportSearchLabel.setFont(mainFont);
+		reportSearchPanel.add(reportSearchLabel);
 	}
 
-	public GUI() {
+	public void createComboBox() {
+		employeeComboBox = new JComboBox<String>();
+		employeeComboBox.addItem("Employee 1");
+		employeeComboBox.addItem("Employee 2");
+		employeeComboBox.addItem("Employee 3");
+		employeeComboBox.addItem("Employee 4");
+		employeeComboBox.addItem("Employee 5");
+		employeeComboBox.setBounds(270, 200, 200, 34);
+		assignmentPanel.add(employeeComboBox);
+
+		projectCodeComboBox = new JComboBox<String>();
+		projectCodeComboBox.addItem("CODE 1");
+		projectCodeComboBox.addItem("CODE 2");
+		projectCodeComboBox.addItem("CODE 3");
+		projectCodeComboBox.addItem("CODE 4");
+		projectCodeComboBox.addItem("CODE 5");
+		projectCodeComboBox.setBounds(270, 300, 200, 34);
+		assignmentPanel.add(projectCodeComboBox);
+
+		reportSearchComboBox = new JComboBox<String>();
+		reportSearchComboBox.addItem("Report 1");
+		reportSearchComboBox.addItem("Report 2");
+		reportSearchComboBox.addItem("Report 3");
+		reportSearchComboBox.addItem("Report 4");
+		reportSearchComboBox.addItem("Report 5");
+		reportSearchComboBox.setBounds(260, 180, 220, 30);
+		reportSearchPanel.add(reportSearchComboBox);
+	}
+
+	public testGUI() {
 		createApplicationFrame();
 		createJButton();
 		createJTextField();
 		createJLabel();
 		createJPasswordField();
-		createJComboBox();
-		
+		createComboBox();
+
 		applicationFrame.add(applicationPanel);
 		applicationFrame.add(employeePanel);
 		applicationFrame.add(adminPanel);
 		applicationFrame.add(approvalPanel);
+		applicationFrame.add(assignmentPanel);
+		applicationFrame.add(reportSearchPanel);
 		applicationFrame.setContentPane(applicationPanel);
 		applicationFrame.invalidate();
 		applicationFrame.validate();
 	}
-	
 	public static void main(String args[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new GUI();
+				new testGUI();
 			}
 		});
 	}
-	
+
 	class exitHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 		}
 	}
-	
+
 	class loginHandler implements ActionListener {
 		@SuppressWarnings("deprecation")
 		public void actionPerformed(ActionEvent e) {
@@ -345,7 +435,7 @@ public class GUI {
 			}
 		}
 	}
-	
+
 	class helpHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(applicationFrame, "<html><h1><font color=#23e8ef>Clock in/Clock out System</font></h1>"
@@ -353,12 +443,40 @@ public class GUI {
 					+ "<h3>Test</h3> </html>");
 		}
 	}
-	
+
 	class backHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			applicationFrame.setContentPane(applicationPanel);
-			applicationFrame.invalidate();
-			applicationFrame.validate();
+			if (clockOut) {
+				JOptionPane.showMessageDialog(null, "You are still clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			} else {
+				applicationFrame.setContentPane(applicationPanel);
+				applicationFrame.invalidate();
+				applicationFrame.validate();
+			}
+		}
+	}
+
+	class adminPanelHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				JOptionPane.showMessageDialog(null, "You are still clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			} else {
+				applicationFrame.setContentPane(adminPanel);
+				applicationFrame.invalidate();
+				applicationFrame.validate();
+			}
+		}
+	}
+
+	class assignmentHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				JOptionPane.showMessageDialog(null, "You are still clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			} else {
+				applicationFrame.setContentPane(assignmentPanel);
+				applicationFrame.invalidate();
+				applicationFrame.validate();
+			}
 		}
 	}
 	
@@ -369,28 +487,126 @@ public class GUI {
 			applicationFrame.validate();
 		}
 	}
-	
-	class clockinHandler implements ActionListener {
+
+	class reportSearchHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			getHour(clockinTime);
-			System.out.println(clockinTime);
+			applicationFrame.setContentPane(reportSearchPanel);
+			applicationFrame.invalidate();
+			applicationFrame.validate();
 		}
 	}
 	
-	public String getHour(String theValue) {
-		theValue = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
-		
-		if (Integer.parseInt(theValue) >= 30) {
-			
-			theValue = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-			theValue = String.valueOf(Integer.parseInt(theValue) + 1);
-			
-		} else {
-			
-			theValue = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
-		
+	class clockinHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				JOptionPane.showMessageDialog(null, "You are already clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			} else {
+				clockinHour = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
+				if (Integer.parseInt(clockinHour) >= 30) {
+					clockinHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+					clockinHour = String.valueOf(Integer.parseInt(clockinHour) + 1);
+				} else {
+					clockinHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+				}
+
+				clockinTime = new SimpleDateFormat ("HH:MM").format(Calendar.getInstance().getTime());
+				empCode = applicationUser.getText();
+
+				if(adminWorkCode.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "No Workcode Entered", "Input Error", JOptionPane.WARNING_MESSAGE);
+				} else {
+					workCode = adminWorkCode.getText();
+					projCode = "The project";
+					clockinDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+					clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockinHour);
+					clockOut = true;
+				}
+			}
 		}
-		System.out.println(theValue);
-		return theValue;
+	}
+
+	class clockoutHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				clockoutHour = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
+
+				if (Integer.parseInt(clockoutHour) >= 30) {
+
+					clockoutHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+					clockoutHour = String.valueOf(Integer.parseInt(clockoutHour) + 1);
+
+				} else {
+
+					clockoutHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+
+				}
+
+				clockoutTime = new SimpleDateFormat ("HH:MM").format(Calendar.getInstance().getTime());
+				totalHour = String.valueOf(Integer.parseInt(clockoutHour) - Integer.parseInt(clockinHour));
+				clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockoutTime + "_" + totalHour);
+				toApprove.add(clockStore);
+				clockOut = false;
+				System.out.println(toApprove);
+			} else {
+				JOptionPane.showMessageDialog(null, "You are already clocked out!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+	}
+
+	class clockinHandler2 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				JOptionPane.showMessageDialog(null, "You are already clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			} else {
+				clockinHour = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
+				if (Integer.parseInt(clockinHour) >= 30) {
+					clockinHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+					clockinHour = String.valueOf(Integer.parseInt(clockinHour) + 1);
+				} else {
+					clockinHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+				}
+
+				clockinTime = new SimpleDateFormat ("HH:MM").format(Calendar.getInstance().getTime());
+				empCode = applicationUser.getText();
+
+				if(employeeWorkCode.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "No Workcode Entered", "Input Error", JOptionPane.WARNING_MESSAGE);
+				} else {
+					workCode = employeeWorkCode.getText();
+					projCode = "The project";
+					clockinDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
+					clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockinHour);
+					clockOut = true;
+				}
+			}
+		}
+	}
+
+	class clockoutHandler2 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (clockOut) {
+				clockoutHour = new SimpleDateFormat("mm").format(Calendar.getInstance().getTime());
+
+				if (Integer.parseInt(clockoutHour) >= 30) {
+
+					clockoutHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+					clockoutHour = String.valueOf(Integer.parseInt(clockoutHour) + 1);
+
+				} else {
+
+					clockoutHour = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
+
+				}
+
+				clockoutTime = new SimpleDateFormat ("HH:MM").format(Calendar.getInstance().getTime());
+				totalHour = String.valueOf(Integer.parseInt(clockoutHour) - Integer.parseInt(clockinHour));
+				clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockoutTime + "_" + totalHour);
+				toApprove.add(clockStore);
+				clockOut = false;
+				System.out.println(toApprove);
+			} else {
+				JOptionPane.showMessageDialog(null, "You are already clocked out!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}
 	}
 }
