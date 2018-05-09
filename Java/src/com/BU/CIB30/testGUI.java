@@ -8,10 +8,10 @@ import java.util.Calendar;
 import javax.swing.*;
 
 public class testGUI {
-	
+
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
 	Font headerFont = new Font("Arial", Font.PLAIN,15);
-	
+
 	Color backgroundColor = new Color(242, 242, 242);
 	Color buttonColor = new Color(242, 242, 242);
 	Color foregroundColor = new Color(0, 0, 0);
@@ -46,7 +46,7 @@ public class testGUI {
 		approvalPanel = new JPanel();
 		approvalPanel.setLayout(null);
 		approvalPanel.setBackground(backgroundColor);
-		
+
 		assignmentPanel = new JPanel();
 		assignmentPanel.setLayout(null);
 		assignmentPanel.setBackground(backgroundColor);
@@ -54,7 +54,7 @@ public class testGUI {
 		reportSearchPanel = new JPanel();
 		reportSearchPanel.setLayout(null);
 		reportSearchPanel.setBackground(backgroundColor);
-		
+
 		reportViewPanel = new JPanel();
 		reportViewPanel.setLayout(null);
 		reportViewPanel.setBackground(backgroundColor);
@@ -153,7 +153,7 @@ public class testGUI {
 		adminReport.setBounds(300, 450, 150, 35);
 		adminReport.addActionListener(new reportSearchHandler());
 		adminPanel.add(adminReport);
-		
+
 		approvalBack = new JButton("Back");
 		approvalBack.setBackground(backgroundColor);
 		approvalBack.setBounds(480, 17, 90, 35);
@@ -215,7 +215,7 @@ public class testGUI {
 		adminAssignment.setBounds(300, 500, 150, 35);
 		adminAssignment.addActionListener(new assignmentHandler());
 		adminPanel.add(adminAssignment);
-		
+
 		reportSearchButton = new JButton("Show");
 		reportSearchButton.setBackground(backgroundColor);
 		reportSearchButton.setBounds(450, 280, 70, 30);
@@ -233,36 +233,36 @@ public class testGUI {
 		reportSearchExit.setBounds(680, 17, 90, 35);
 		reportSearchExit.addActionListener(new exitHandler());
 		reportSearchPanel.add(reportSearchExit);
-		
+
 		reportSearchBack = new JButton("Back");
 		reportSearchBack.setBackground(backgroundColor);
 		reportSearchBack.setBounds(480, 17, 90, 35);
 		reportSearchBack.addActionListener(new adminPanelHandler());
 		reportSearchPanel.add(reportSearchBack);
-		
+
 		reportViewBack = new JButton("Back");
 		reportViewBack.setBackground(backgroundColor);
 		reportViewBack.setBounds(480, 17, 90, 35);
 		reportViewBack.addActionListener(new reportSearchBackHandler());
 		reportViewPanel.add(reportViewBack);
-		
+
 		reportViewLogOut = new JButton("Log Out");
 		reportViewLogOut.setBackground(backgroundColor);
 		reportViewLogOut.setBounds(580, 17, 90, 35);
 		reportViewLogOut.addActionListener(new backHandler());
 		reportViewPanel.add(reportViewLogOut);
-		
+
 		reportViewExit = new JButton("Exit");
 		reportViewExit.setBackground(backgroundColor);
 		reportViewExit.setBounds(680, 17, 90, 35);
 		reportViewExit.addActionListener(new exitHandler());
 		reportViewPanel.add(reportViewExit);
-		
+
 		reportViewDownload = new JButton("Download");
 		reportViewDownload.setBackground(backgroundColor);
 		reportViewDownload.setBounds(480, 260, 90, 35);
 		reportViewPanel.add(reportViewDownload);
-		
+
 	}
 
 	public void createJTextField() {
@@ -278,6 +278,7 @@ public class testGUI {
 		employeeWorkCode.setBackground(backgroundColor);
 		employeeWorkCode.setForeground(foregroundColor);
 		employeeWorkCode.setFont(mainFont);
+		employeeWorkCode.addFocusListener(new descriptionHandler());
 		employeePanel.add(employeeWorkCode);
 
 		employeeDescription = new JTextField();
@@ -292,6 +293,7 @@ public class testGUI {
 		adminWorkCode.setBackground(backgroundColor);
 		adminWorkCode.setForeground(foregroundColor);
 		adminWorkCode.setFont(mainFont);
+		adminWorkCode.addFocusListener(new descriptionHandler());
 		adminPanel.add(adminWorkCode);
 
 		adminDescription = new JTextField();
@@ -300,7 +302,7 @@ public class testGUI {
 		adminDescription.setForeground(foregroundColor);
 		adminDescription.setFont(new Font("Arial", Font.PLAIN,15));
 		adminPanel.add(adminDescription);
-		
+
 		reportSearchTextField = new JTextField("");
 		reportSearchTextField.setBackground(backgroundColor);
 		reportSearchTextField.setBounds(290, 280, 150, 30);
@@ -393,12 +395,12 @@ public class testGUI {
 		headerFive.setBounds(475, 130, 100, 100);
 		headerFive.setFont(headerFont);
 		approvalPanel.add(headerFive);
-		
+
 		headerSix = new JLabel("Time");
 		headerSix.setBounds(585, 130, 100, 100);
 		headerSix.setFont(headerFont);
 		approvalPanel.add(headerSix);
-		
+
 		headerSeven = new JLabel("TaskDesc");
 		headerSeven.setBounds(695, 130, 100, 100);
 		headerSeven.setFont(headerFont);
@@ -417,16 +419,16 @@ public class testGUI {
 		assignmentProjLabel.setBounds(300, 170, 200, 200);
 		assignmentProjLabel.setFont(mainFont);
 		assignmentPanel.add(assignmentProjLabel);
-		
+
 		reportSearchLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		reportSearchLogo.setBounds(20, 20, 200, 70);
 		reportSearchPanel.add(reportSearchLogo);
-		
+
 		reportSearchLabel = new JLabel("Search Parameter");
 		reportSearchLabel.setBounds(285, 230, 300, 30);
 		reportSearchLabel.setFont(mainFont);
 		reportSearchPanel.add(reportSearchLabel);
-		
+
 		reportViewLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		reportViewLogo.setBounds(20, 20, 200, 70);
 		reportViewPanel.add(reportViewLogo);
@@ -459,7 +461,7 @@ public class testGUI {
 		reportSearchComboBox.addItem("Report 5");
 		reportSearchComboBox.setBounds(290, 180, 220, 30);
 		reportSearchPanel.add(reportSearchComboBox);
-		
+
 		reportViewComboBox = new JComboBox<String>();
 		reportViewComboBox.addItem("FileExtension1");
 		reportViewComboBox.addItem("FileExtension2");
@@ -522,7 +524,7 @@ public class testGUI {
 				JOptionPane.showMessageDialog(null, "Username and password don't match", "Login Error", JOptionPane.WARNING_MESSAGE);
 				applicationUser.setText("");
 				applicationPass.setText("");
-				
+
 			}
 		}
 	}
@@ -550,7 +552,7 @@ public class testGUI {
 					+ "<br>A0N003"
 					+ "<br>A0N004"
 					+ "<br>A0N005</h3></html>");
-			
+
 		}
 	}
 
@@ -559,6 +561,8 @@ public class testGUI {
 			if (clockOut) {
 				JOptionPane.showMessageDialog(null, "You are still clocked in!", "Input Error", JOptionPane.WARNING_MESSAGE);
 			} else {
+				employeeWorkCode.setText("");
+				adminWorkCode.setText("");
 				applicationFrame.setContentPane(applicationPanel);
 				applicationFrame.invalidate();
 				applicationFrame.validate();
@@ -589,7 +593,7 @@ public class testGUI {
 			}
 		}
 	}
-	
+
 	class reviewHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			applicationFrame.setContentPane(approvalPanel);
@@ -605,7 +609,7 @@ public class testGUI {
 			applicationFrame.validate();
 		}
 	}
-	
+
 	class reportViewHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			applicationFrame.setContentPane(reportViewPanel);
@@ -613,7 +617,7 @@ public class testGUI {
 			applicationFrame.revalidate();
 		}
 	}
-	
+
 	class reportSearchBackHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			applicationFrame.setContentPane(reportSearchPanel);
@@ -621,7 +625,7 @@ public class testGUI {
 			applicationFrame.revalidate();
 		}
 	}
-	
+
 	class clockinHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (clockOut) {
@@ -732,6 +736,32 @@ public class testGUI {
 				System.out.println(toApprove);
 			} else {
 				JOptionPane.showMessageDialog(null, "You are already clocked out!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+	}
+
+	class descriptionHandler implements FocusListener {
+		public void focusLost(FocusEvent arg0) {
+			if (adminWorkCode.getText().equals("999995") | employeeWorkCode.getText().equals("999995")) {
+				adminDescription.setEditable(true);
+				employeeDescription.setEditable(true);
+			} else {
+				adminDescription.setEditable(false);
+				adminDescription.setText("-");
+				employeeDescription.setEditable(false);
+				employeeDescription.setText("-");
+			}
+
+		}
+		public void focusGained(FocusEvent e) {
+			if (adminWorkCode.getText().equals("99995") | employeeWorkCode.getText().equals("99995")) {
+				adminDescription.setEditable(true);
+				employeeDescription.setEditable(true);
+			} else {
+				adminDescription.setEditable(false);
+				adminDescription.setText("-");
+				employeeDescription.setEditable(false);
+				employeeDescription.setText("-");
 			}
 		}
 	}
