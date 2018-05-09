@@ -4,7 +4,42 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-
+#fileContent{
+  background-color: aliceblue;
+  width: 1000px;
+  border: 25px solid #f9e08e;
+  padding: 25px;
+  margin: 25px;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even){
+  background: #dddddd;
+}
+#help{
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: white;
+  margin-top: 20px;
+}
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  color: black;
+  text-align: left;
+}
 
  #cover {
    background: #585857 url('') center center no-repeat;
@@ -2333,14 +2368,14 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-success {
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745
+  background-color: #426ca9;
+  border-color: #426ca9
 }
 
 .btn-success:hover {
   color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34
+  background-color: #00bfb7;
+  border-color: #00bfb7
 }
 
 .btn-success.focus, .btn-success:focus {
