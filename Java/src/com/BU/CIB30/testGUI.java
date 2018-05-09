@@ -1,24 +1,38 @@
 package com.BU.CIB30;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
-public class testGUI {
+public class GUI {
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
 	Color testColor = new Color(255, 255, 255);
 	
 	private JFrame applicationFrame;
 	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel;
-	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny;
+	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, adminAssignment;
 	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription;
 	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive;
 	private JPasswordField applicationPass;
+	private JComboBox<String> adminComboBox;
 	public String clockinTime;
-	private testNoGUI method = new testNoGUI();
+	//private testNoGUI method = new testNoGUI();
 	
 	private void createApplicationFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -88,6 +102,10 @@ public class testGUI {
 		employeeLogOut.addActionListener(new backHandler());
 		employeePanel.add(employeeLogOut);
 		
+		adminAssignment = new JButton("Assignment");
+		adminAssignment.setBounds(300, 500, 150, 35);
+		adminPanel.add(adminAssignment);
+		
 		adminHelp = new JButton("Help");
 		adminHelp.setBounds(450, 225, 70, 35);
 		adminHelp.addActionListener(new helpHandler());
@@ -139,6 +157,17 @@ public class testGUI {
 		approvalDeny = new JButton("Deny");
 		approvalDeny.setBounds(385, 90, 90, 35);
 		approvalPanel.add(approvalDeny);
+	}
+	
+	public void createJComboBox() {
+		adminComboBox = new JComboBox<String>();
+		adminComboBox.addItem("Project 1");
+		adminComboBox.addItem("Project 2");
+		adminComboBox.addItem("Project 3");
+		adminComboBox.addItem("Project 4");
+		adminComboBox.addItem("Project 5");
+		adminComboBox.setBounds(170, 185, 120, 34);
+		adminPanel.add(adminComboBox);
 	}
 	
 	public void createJTextField() {
@@ -266,12 +295,13 @@ public class testGUI {
 		approvalPanel.add(headerFive);
 	}
 
-	public testGUI() {
+	public GUI() {
 		createApplicationFrame();
 		createJButton();
 		createJTextField();
 		createJLabel();
 		createJPasswordField();
+		createJComboBox();
 		
 		applicationFrame.add(applicationPanel);
 		applicationFrame.add(employeePanel);
@@ -281,10 +311,11 @@ public class testGUI {
 		applicationFrame.invalidate();
 		applicationFrame.validate();
 	}
+	
 	public static void main(String args[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new testGUI();
+				new GUI();
 			}
 		});
 	}
