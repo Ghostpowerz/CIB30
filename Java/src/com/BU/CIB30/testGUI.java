@@ -20,7 +20,7 @@ public class testGUI {
 	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel, assignmentPanel, reportSearchPanel, reportViewPanel;
 	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, assignmentExitButton, assignmentLogOutButton, assignmentBackButton, assignmentAssign, assignmentBack, adminAssignment, reportSearchButton, reportSearchLogOut, reportSearchExit, reportSearchBack, approvalBack, reportViewBack, reportViewLogOut, reportViewExit, reportViewDownload;
 	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription, reportSearchTextField;
-	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo;
+	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo, outputLabel;
 	private JPasswordField applicationPass;
 	private JComboBox<String> employeeComboBox, projectCodeComboBox, reportSearchComboBox, reportViewComboBox;
 	private boolean clockOut = false;
@@ -432,6 +432,12 @@ public class testGUI {
 		reportViewLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		reportViewLogo.setBounds(20, 20, 200, 70);
 		reportViewPanel.add(reportViewLogo);
+		
+		outputLabel = new JLabel("", SwingConstants.RIGHT);
+		outputLabel.setBounds(30, 60, 280, 280);
+		outputLabel.setFont(mainFont);
+		adminPanel.add(outputLabel);
+		employeePanel.add(outputLabel);
 	}
 
 	public void createComboBox() {
@@ -764,5 +770,18 @@ public class testGUI {
 				employeeDescription.setText("-");
 			}
 		}
+		
+
+		}
+	public void focusGained(FocusEvent e) {
+		//public void focusLost(FocusEvent arg0) {
+			if (adminWorkCode.getText().equals("999995") | employeeWorkCode.getText().equals("999995")) {
+				outputLabel.setText("Other");
+			} else if (adminWorkCode.getText().equals("999996") | employeeWorkCode.getText().equals("999996")) {
+				outputLabel.setText("Compassionate Leave");
+			} else if ()
+		}
 	}
-}
+		
+	
+//}
