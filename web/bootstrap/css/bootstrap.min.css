@@ -4,6 +4,7 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+<<<<<<< HEAD
 #fileContent{
   background-color: aliceblue;
   width: 1000px;
@@ -31,6 +32,9 @@ tr:nth-child(even){
   background-color: white;
   margin-top: 20px;
 }
+=======
+
+>>>>>>> 2c717f6c4486499f6dd639f25e34f8c090f3535b
 .footer{
   position: fixed;
   left: 0;
