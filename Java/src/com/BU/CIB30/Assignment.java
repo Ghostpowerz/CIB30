@@ -13,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.BU.CIB30.GUI.adminPanelHandler;
+import com.BU.CIB30.GUI.assignmentHandler;
+import com.BU.CIB30.GUI.backHandler;
+import com.BU.CIB30.GUI.exitHandler;
+
 public class Assignment {
 	
 	Font mainFont = new Font("Arial", Font.PLAIN,20);
@@ -119,5 +124,27 @@ public class Assignment {
 			}
 		});
 	}
+	
+	/**
+	 * 	assignmentExit = new JButton("Exit");
+		assignmentExit.setBounds(680, 17, 90, 35);
+		assignmentExit.addActionListener(new exitHandler());
+		assignmentPanel.add(assignmentExit);
+		
+		assignmentLogOut = new JButton("Log Out");
+		assignmentLogOut.setBounds(580, 17, 90, 35);
+		assignmentLogOut.addActionListener(new backHandler());
+		assignmentPanel.add(assignmentLogOut);
+		
+		assignmentBack = new JButton("Back");
+		assignmentBack.setBounds(480, 17, 90, 35);
+		assignmentBack.addActionListener(new adminPanelHandler());
+		assignmentPanel.add(assignmentBack);
+		
+		adminAssignment = new JButton("Assignment");
+		adminAssignment.setBounds(300, 500, 150, 35);
+		adminPanel.add(adminAssignment);
+		adminAssignment.addActionListener(new assignmentHandler());
+	 */
 
 }
