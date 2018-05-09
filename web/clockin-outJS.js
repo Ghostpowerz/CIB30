@@ -1,26 +1,14 @@
 function checkForm(e){
 	var workCode = document.getElementById("workCode").value;
-		//check form OK to submit
 		if(workCode!=511){
-			//if OK enable submit button
 			document.getElementById("workDescription").disabled = true;
 		}else{
-			//if not disable submit
 			document.getElementById("workDescription").disabled = false;
 		}
 	}
-	
-//get firstname input and attach an eventlister to the change event
 var el = document.getElementById("workCode");
-el.addEventListener('mouseover', checkForm, false);
-
-function helpFunction(){
-var helptext = document.getElementById('help');
-	if(helptext.style.display === "none"){
-		helptext.style.display = "block";
-	}else{
-		helptext.style.display = 'none';
-	}
+if(el){
+	el.addEventListener('mouseover', checkForm, false);	
 }
 
 function timeSheetApproved(){
@@ -46,3 +34,25 @@ function logInFunction(){
 		alert("Wrong username or password. Please try again.");
 	}
 }
+
+// Get the modal
+var modal = document.getElementById('codesModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("helpBtn");
+
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("closeBtn")[0];
+
+btn.addEventListener('click', openModal);
+
+closeBtn.addEventListener('click', closeModal);
+
+function openModal(){
+	modal.style.display = 'block';
+}
+
+function closeModal(){
+	modal.style.display = 'none';
+}
+

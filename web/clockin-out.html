@@ -1,7 +1,5 @@
 <!doctype html>
-
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <title>Clock in / Clock out</title>
@@ -9,26 +7,16 @@
         <meta name="author" content="Ieuan Burton,Donato De Nicola">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     </head>
-
-
-
     <body>
-
         <!-- ============ HEADER SECTION ============== -->
         <div id="header">
-
         </div>
-
-
         <!-- ============ NAVIGATION BAR SECTION ============== -->
-
-
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <!-- Brand/logo -->
             <a class="navbar-brand" href="#">
                 <img src="imgs/kingfisher.png" alt="logo" style="width:200px;height:50px">
             </a>
-
             <!-- Links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -38,7 +26,6 @@
                     <a class="nav-link" href="https://www.kingfisher.com/index.asp?pageid=2">About us</a>
                 </li>
             </ul>
-
             <div id="navbarNavDropdown" class="navbar-collapse collapse">
                 <ul class="navbar-nav mr-auto">
                 </ul>
@@ -50,13 +37,9 @@
             </div>
         </nav>
         <!-- ============ MAIN CONTENT SECTION ============== -->
-
         <div class="container">
-
             <form class="form-horizontal">
                 <fieldset>
-
-
                     <!-- Text input-->
                     <section id="cover">
                         <div id="cover-caption">
@@ -78,7 +61,7 @@
                                                 </div>
                                                 <button type="submit" id="btnClockIn" class="btn btn-success ">Clock in</button>
                                                 <button type="submit" id="btnClockOut" class="btn btn-success ">Clock out</button>
-                                                <button type="submit" onclick="helpFunction()" id="btnClockOut" class="btn btn-success ">HELP</button>
+                                                <button type="submit" id="helpBtn" class="btn btn-success ">HELP</button>
                                             </form>
                                         </div>
                                         <br>
@@ -88,12 +71,17 @@
                             </div>
                         </div>
                     </section>
-<div id="help"> Lunch:999999 ; Annual Leave 999998 ; Sickness: 999997 ; Compassionete Leave: 999996 </div>
-                   
+                    <!-- The Modal -->
+                    <div id="codesModal" class="modal">
+                        <div class="modal-content">
+                            <span class="closeBtn">&times;</span>
+                            <p>Codes: <br>Lunch: 999999 ; Annual Leave: 999998 ; Sickness: 999997 ; Compassionete Leave: 999996</p>
+                        </div>
+                    </div>
                     <!-- ============ FOOTER SECTION ============== -->
                     <div class="footer">
                         <p><img src="imgs/kingfisher.png" alt="logo" style="width:100px;height:25px"> © Kingfisher plc 2018, Company number 01664812. Registered in England, 3 Sheldon Square, Paddington, London, W2 6PX</p>
                     </div>
-<script src="clockin-outJS.js"> </script>
+                    <script src="clockin-outJS.js"> </script>
                     </body>
                 </html>
