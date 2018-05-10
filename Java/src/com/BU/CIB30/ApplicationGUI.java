@@ -14,13 +14,13 @@ public class ApplicationGUI {
 //     h. Export data (NEEDS DATABASE) - IF TIME
 //	   2.2 (NEEDS DATABASE) - IF TIME
 //     2.3 (NEEDS DATABASE) - IF TIME
-//     Connect Database - PRIORITY
 //     Create sufficient planning - PRIORITY
 //     Fix Layout Issues - MINOR
 //BY 5PM
 
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
 	Font headerFont = new Font("Arial", Font.PLAIN,15);
+	Font dataFont = new Font("Arial", Font.PLAIN,10);
 
 	Color backgroundColor = new Color(242, 242, 242);
 	Color buttonColor = new Color(242, 242, 242);
@@ -30,12 +30,12 @@ public class ApplicationGUI {
 	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel, assignmentPanel, reportSearchPanel, reportViewPanel;
 	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, approvalNext, approvalCancel, assignmentExitButton, assignmentLogOutButton, assignmentBackButton, assignmentAssign, assignmentBack, adminAssignment, reportSearchButton, reportSearchLogOut, reportSearchExit, reportSearchBack, approvalBack, reportViewBack, reportViewLogOut, reportViewExit, reportViewDownload;
 	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription, reportSearchTextField;
-	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, headerEight, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo, adminCodeLabel, employeeCodeLabel, approvalOne, approvalTwo, approvalThree, approvalFour, approvalFive, approvalSix, approvalSeven, approvalEight;
+	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, headerEight, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo, adminCodeLabel, employeeCodeLabel, approvalOne, approvalTwo, approvalThree, approvalFour, approvalFive, approvalSix, approvalSeven, approvalEight, taskCode, approvalNine;
 	private JPasswordField applicationPass;
 	private JComboBox<String> employeeComboBox, projectCodeComboBox, reportSearchComboBox, reportViewComboBox;
 	private boolean clockOut = false, approvalProgress = false, approvalEmpty = true;
 	private int confirmed;
-	private String clockinTime, empCode, workCode, projCode, clockinDate, clockinHour, clockStore, clockoutHour, totalHour, clockoutTime, approveList, split1, split2, split3, split4, split5, split6, split7, split8;
+	private String clockinTime, empCode, workCode, projCode, clockinDate, clockinHour, clockStore, clockoutHour, totalHour, clockoutTime, approveList, split1, split2, split3, split4, split5, split6, split7, split8, split9;
 	private String[] splitApprove;
 	ArrayList<String> toApprove = new ArrayList<String>();
 
@@ -422,7 +422,7 @@ public class ApplicationGUI {
 		adminPanel.add(adminCodeLabel);
 
 		headerOne = new JLabel("EmpCode");
-		headerOne.setBounds(35, 130, 100, 100);
+		headerOne.setBounds(15, 130, 100, 100);
 		headerOne.setFont(headerFont);
 		approvalPanel.add(headerOne);
 
@@ -431,8 +431,8 @@ public class ApplicationGUI {
 		headerTwo.setFont(headerFont);
 		approvalPanel.add(headerTwo);
 
-		headerThree = new JLabel("Data");
-		headerThree.setBounds(275, 130, 100, 100);
+		headerThree = new JLabel("Date");
+		headerThree.setBounds(293, 130, 100, 100);
 		headerThree.setFont(headerFont);
 		approvalPanel.add(headerThree);
 
@@ -442,17 +442,17 @@ public class ApplicationGUI {
 		approvalPanel.add(headerFour);
 
 		headerFive = new JLabel("ClockOut");
-		headerFive.setBounds(475, 130, 100, 100);
+		headerFive.setBounds(455, 130, 100, 100);
 		headerFive.setFont(headerFont);
 		approvalPanel.add(headerFive);
 
 		headerSix = new JLabel("Time");
-		headerSix.setBounds(585, 130, 100, 100);
+		headerSix.setBounds(545, 130, 100, 100);
 		headerSix.setFont(headerFont);
 		approvalPanel.add(headerSix);
 
 		headerSeven = new JLabel("TaskDesc");
-		headerSeven.setBounds(695, 130, 100, 100);
+		headerSeven.setBounds(705, 130, 100, 100);
 		headerSeven.setFont(headerFont);
 		approvalPanel.add(headerSeven);
 
@@ -462,44 +462,50 @@ public class ApplicationGUI {
 		approvalPanel.add(headerEight);
 
 		approvalOne = new JLabel("-", SwingConstants.CENTER);
-		approvalOne.setBounds(35, 160, 100, 100);
-		approvalOne.setFont(mainFont);
+		approvalOne.setBounds(-10, 160, 100, 100);
+		approvalOne.setFont(dataFont);
 		approvalPanel.add(approvalOne);
 
 		approvalTwo = new JLabel("-", SwingConstants.CENTER);
-		approvalTwo.setBounds(100, 160, 100, 100);
-		approvalTwo.setFont(mainFont);
+		approvalTwo.setBounds(80, 160, 100, 100);
+		approvalTwo.setFont(dataFont);
 		approvalPanel.add(approvalTwo);
 
 		approvalThree = new JLabel("-", SwingConstants.CENTER);
-		approvalThree.setBounds(185, 160, 100, 100);
-		approvalThree.setFont(mainFont);
+		approvalThree.setBounds(165, 160, 100, 100);
+		approvalThree.setFont(dataFont);
 		approvalPanel.add(approvalThree);
 
 		approvalFour = new JLabel("-", SwingConstants.CENTER);
-		approvalFour.setBounds(275, 160, 100, 100);
-		approvalFour.setFont(mainFont);
+		approvalFour.setBounds(580, 160, 100, 100);
+		approvalFour.setFont(dataFont);
 		approvalPanel.add(approvalFour);
 
 		approvalFive = new JLabel("-", SwingConstants.CENTER);
-		approvalFive.setBounds(365, 160, 100, 100);
-		approvalFive.setFont(mainFont);
+		approvalFive.setBounds(260, 160, 100, 100);
+		approvalFive.setFont(dataFont);
 		approvalPanel.add(approvalFive);
 
 		approvalSix = new JLabel("-", SwingConstants.CENTER);
-		approvalSix.setBounds(475, 160, 100, 100);
-		approvalSix.setFont(mainFont);
+		approvalSix.setBounds(335, 160, 100, 100);
+		approvalSix.setFont(dataFont);
 		approvalPanel.add(approvalSix);
 
 		approvalSeven = new JLabel("-", SwingConstants.CENTER);
-		approvalSeven.setBounds(585, 160, 100, 100);
-		approvalSeven.setFont(mainFont);
+		approvalSeven.setBounds(430, 160, 100, 100);
+		approvalSeven.setFont(dataFont);
 		approvalPanel.add(approvalSeven);
 
 		approvalEight = new JLabel("-", SwingConstants.CENTER);
-		approvalEight.setBounds(695, 160, 100, 100);
-		approvalEight.setFont(mainFont);
+		approvalEight.setBounds(510, 160, 100, 100);
+		approvalEight.setFont(dataFont);
 		approvalPanel.add(approvalEight);
+		
+		approvalNine = new JLabel("-", SwingConstants.CENTER);
+		approvalNine.setBounds(675, 160, 100, 100);
+		approvalNine.setFont(dataFont);
+		approvalPanel.add(approvalNine);
+		
 
 		assignmentLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		assignmentLogo.setBounds(20, 20, 200, 70);
@@ -527,6 +533,12 @@ public class ApplicationGUI {
 		reportViewLogo = new JLabel(new ImageIcon("kingfisherLogo.png"));
 		reportViewLogo.setBounds(20, 20, 200, 70);
 		reportViewPanel.add(reportViewLogo);
+		
+		taskCode = new JLabel("TaskCode");
+		taskCode.setBounds(605, 130, 100, 100);
+		taskCode.setFont(headerFont);
+		approvalPanel.add(taskCode);
+		
 	}
 
 	public void createComboBox() {
@@ -797,6 +809,7 @@ public class ApplicationGUI {
 						projCode = "0001";
 						clockinDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
 						clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockinHour);
+						System.out.println(clockStore);
 						clockOut = true;
 
 					}
@@ -977,8 +990,8 @@ public class ApplicationGUI {
 				adminCodeLabel.setText("Compassionate Leave");
 				employeeCodeLabel.setText("Compassionate Leave");
 			} else if (adminWorkCode.getText().equals("999995") | employeeWorkCode.getText().equals("999995")) {
-				adminCodeLabel.setText("Other - Enter Desc");
-				employeeCodeLabel.setText("Other - Enter Desc");
+				adminCodeLabel.setText("Other");
+				employeeCodeLabel.setText("Other");
 			} else if (adminWorkCode.getText().equals("100810") | employeeWorkCode.getText().equals("100810")) {
 				adminCodeLabel.setText("Task 1");
 				employeeCodeLabel.setText("Task 1");
@@ -1030,6 +1043,7 @@ public class ApplicationGUI {
 				if (approvalProgress == false) {
 					approveList = toApprove.get(0);
 					splitApprove = approveList.split("_");
+					
 					split1 = splitApprove[0];
 					split2 = splitApprove[1];
 					split3 = splitApprove[2];
@@ -1038,6 +1052,7 @@ public class ApplicationGUI {
 					split6 = splitApprove[5];
 					split7 = splitApprove[6];
 					split8 = splitApprove[7];
+					split9 = splitApprove[8];
 
 					approvalOne.setText(split1);
 					approvalTwo.setText(split2);
@@ -1047,6 +1062,7 @@ public class ApplicationGUI {
 					approvalSix.setText(split6);
 					approvalSeven.setText(split7);
 					approvalEight.setText(split8);
+					approvalNine.setText(split9);
 
 					approvalProgress = true;
 
@@ -1077,6 +1093,7 @@ public class ApplicationGUI {
 					approvalSix.setText("-");
 					approvalSeven.setText("-");
 					approvalEight.setText("-");
+					approvalNine.setText("-");
 					approvalProgress = false;
 
 					split1 = "";
@@ -1087,6 +1104,7 @@ public class ApplicationGUI {
 					split6 = "";
 					split7 = "";
 					split8 = "";
+					split9 = "";
 
 				}
 
@@ -1131,6 +1149,7 @@ public class ApplicationGUI {
 				approvalSix.setText("-");
 				approvalSeven.setText("-");
 				approvalEight.setText("-");
+				approvalNine.setText("-");
 				approvalProgress = false;
 
 				split1 = "";
@@ -1141,6 +1160,7 @@ public class ApplicationGUI {
 				split6 = "";
 				split7 = "";
 				split8 = "";
+				split9 = "";
 				
 				approvalProgress = false;
 
