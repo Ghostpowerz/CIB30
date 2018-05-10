@@ -2,21 +2,27 @@ package com.BU.CIB30;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ApplicationGUI {
-//TODO e.The system will record any overtime (on projects only, not activities) - PRIORITY (EASY)
-//	   f.The system will be able to copy the previous week's project and activities into a new week (NEEDS DATABASE) - IF TIME
-//     g. Add reports (NEEDS DATABASE) - PIORITY (NEEDS QUERIES)
-//     h. Export data (NEEDS DATABASE) - IF TIME
-//	   2.2 (NEEDS DATABASE) - IF TIME
-//     2.3 (NEEDS DATABASE) - IF TIME
-//     Create sufficient planning - PRIORITY
-//     Fix Layout Issues - MINOR
-//BY 5PM
+	//TODO e.The system will record any overtime (on projects only, not activities) - PRIORITY (EASY)
+	//	   f.The system will be able to copy the previous week's project and activities into a new week (NEEDS DATABASE) - IF TIME
+	//     g. Add reports (NEEDS DATABASE) - PIORITY (NEEDS QUERIES) WILL
+	//     h. Export data (NEEDS DATABASE) - IF TIME WILL
+	//	   2.2 (NEEDS DATABASE) - IF TIME WILL
+	//     2.3 (NEEDS DATABASE) - IF TIME WILL
+	//     Add visual prompts to show stuff works - MINOR GATH
+	//BY 5PM
 
 	Font mainFont = new Font("Arial", Font.PLAIN,25);
 	Font headerFont = new Font("Arial", Font.PLAIN,15);
@@ -30,16 +36,18 @@ public class ApplicationGUI {
 	private JPanel applicationPanel, employeePanel, adminPanel, approvalPanel, assignmentPanel, reportSearchPanel, reportViewPanel;
 	private JButton applicationLogIn, applicationExit, employeeHelp, employeeClockIn, employeeClockOut, employeeExit, employeeLogOut, adminHelp, adminClockIn, adminClockOut, adminExit, adminLogOut, adminApproval, adminReport, approvalExit, approvalLogOut, approvalConfirm, approvalDeny, approvalNext, approvalCancel, assignmentExitButton, assignmentLogOutButton, assignmentBackButton, assignmentAssign, assignmentBack, adminAssignment, reportSearchButton, reportSearchLogOut, reportSearchExit, reportSearchBack, approvalBack, reportViewBack, reportViewLogOut, reportViewExit, reportViewDownload;
 	private JTextField applicationUser, employeeWorkCode, employeeDescription, adminWorkCode, adminDescription, reportSearchTextField;
-	private JLabel applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, headerEight, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo, adminCodeLabel, employeeCodeLabel, approvalOne, approvalTwo, approvalThree, approvalFour, approvalFive, approvalSix, approvalSeven, approvalEight, taskCode, approvalNine;
+	private JLabel approvalNine, taskCode, applicationUserLabel, applicationPassLabel, applicationLogo, employeeWorkCodeLabel, employeeDescriptionLabel, employeeLogo, adminWorkCodeLabel, adminDescriptionLabel, adminLogo, approvalLogo, headerOne, headerTwo, headerThree, headerFour, headerFive, headerSix, headerSeven, headerEight, assignmentLogo, unassignedEmployeeLabel, assignmentProjLabel, reportSearchLabel, reportSearchLogo, reportViewLogo, adminCodeLabel, employeeCodeLabel, approvalOne, approvalTwo, approvalThree, approvalFour, approvalFive, approvalSix, approvalSeven, approvalEight;
 	private JPasswordField applicationPass;
 	private JComboBox<String> employeeComboBox, projectCodeComboBox, reportSearchComboBox, reportViewComboBox;
 	private boolean clockOut = false, approvalProgress = false, approvalEmpty = true;
-	private int confirmed;
-	private String clockinTime, empCode, workCode, projCode, clockinDate, clockinHour, clockStore, clockoutHour, totalHour, clockoutTime, approveList, split1, split2, split3, split4, split5, split6, split7, split8, split9;
+	private Connection con = null;
+	private int confirmed, loginCount;
+	private String clockinTime, empCode, workCode, projCode, clockinDate, clockinHour, clockStore, clockoutHour, totalHour, clockoutTime, approveList, split1, split2, split3, split4, split5, split6, split7, split8, split9, loginUser, loginPass, loginFull, loginInput;
 	private String[] splitApprove;
+	Statement stmt = null;
+	private ResultSet loginCounter;
 	ArrayList<String> toApprove = new ArrayList<String>();
-
-
+	ArrayList<String> loginList = new ArrayList<String>();
 
 	private void createApplicationFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -79,6 +87,7 @@ public class ApplicationGUI {
 		applicationFrame.setVisible(true);
 		applicationFrame.setResizable(false);
 	}
+
 
 	public void createJButton() {
 		applicationLogIn = new JButton("Log In");
@@ -291,6 +300,7 @@ public class ApplicationGUI {
 
 	}
 
+
 	public void createJTextField() {
 		applicationUser = new JTextField("", SwingConstants.CENTER);
 		applicationUser.setHorizontalAlignment(SwingConstants.CENTER);
@@ -346,6 +356,7 @@ public class ApplicationGUI {
 		reportSearchPanel.add(reportSearchTextField);
 	}
 
+
 	public void createJPasswordField() {
 		applicationPass = new JPasswordField(10);
 		applicationPass.setHorizontalAlignment(SwingConstants.CENTER);
@@ -355,6 +366,7 @@ public class ApplicationGUI {
 		applicationPass.setFont(new Font("Serif", Font.PLAIN, 13));
 		applicationPanel.add(applicationPass);
 	}
+
 
 	public void createJLabel() {
 		applicationUserLabel = new JLabel("Username");
@@ -541,6 +553,7 @@ public class ApplicationGUI {
 		
 	}
 
+
 	public void createComboBox() {
 		employeeComboBox = new JComboBox<String>();
 		employeeComboBox.addItem("Employee 1");
@@ -581,6 +594,21 @@ public class ApplicationGUI {
 		reportViewPanel.add(reportViewComboBox);
 	}
 
+	public void createConnection() throws SQLException {
+		try {
+			String host = "jdbc:Oracle:thin://s5009373_y1@//computing.bournemouth.ac.uk:1521/decprd";
+			String username = "S5068790_y1";
+			String password = "password1998";
+
+			con = DriverManager.getConnection(host, username, password);
+		}
+
+		catch (SQLException err) {
+			System.out.println(err.getMessage());
+		}
+		stmt = con.createStatement();
+	}
+
 	public ApplicationGUI() {
 		createApplicationFrame();
 		createJButton();
@@ -588,6 +616,11 @@ public class ApplicationGUI {
 		createJLabel();
 		createJPasswordField();
 		createComboBox();
+		try {
+			createConnection();
+		} catch (SQLException e) {
+			System.out.println("ERROR");
+		}
 
 		applicationFrame.add(applicationPanel);
 		applicationFrame.add(employeePanel);
@@ -609,40 +642,57 @@ public class ApplicationGUI {
 		});
 	}
 
+
 	class exitHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 		}
 	}
 
+
 	class loginHandler implements ActionListener {
 		@SuppressWarnings("deprecation")
 		public void actionPerformed(ActionEvent e) {
-			if (applicationUser.getText().equals("Emp") && applicationPass.getText().equals("pass")) {
-
-				applicationFrame.setContentPane(employeePanel);
-				applicationFrame.invalidate();
-				applicationFrame.validate();
-				empCode = applicationUser.getText();
-				applicationUser.setText("");
-				applicationPass.setText("");
-
-			} else if (applicationUser.getText().equals("Admin") && applicationPass.getText().equals("pass")) {
-
-				applicationFrame.setContentPane(adminPanel);
-				applicationFrame.invalidate();
-				applicationFrame.validate();
-				empCode = applicationUser.getText();
-				applicationUser.setText("");
-				applicationPass.setText("");
-
-			} else {
-
-				JOptionPane.showMessageDialog(null, "Username and password don't match", "Login Error", JOptionPane.WARNING_MESSAGE);
-				applicationUser.setText("");
-				applicationPass.setText("");
-
+			loginInput = (applicationUser.getText() + "_" + applicationPass.getText());
+			try {
+				loginCounter = stmt.executeQuery("SELECT * FROM EMPLOYEE");
+				while (loginCounter.next()) {
+					loginCount++;
+					loginUser = loginCounter.getString("EMP_ID");
+					loginPass = loginCounter.getString("EMP_PASSWORD");
+					loginFull = ("Emp" + loginUser + "_" + loginPass);
+					loginList.add(loginFull);
+					System.out.println(loginList);
+					System.out.println("Input" + loginInput);
+				}
+			} catch (SQLException e1) {
+				System.out.println("ERROR");
 			}
+
+			if (loginInput.startsWith("Emp1")) {
+				if (loginList.contains(loginInput)) {
+					applicationFrame.setContentPane(adminPanel);
+					applicationFrame.invalidate();
+					applicationFrame.validate();
+				} else {
+					JOptionPane.showMessageDialog(null, "Incorrect Password!", "Input Error", JOptionPane.WARNING_MESSAGE);
+				}
+			} else if (loginInput.startsWith("Emp0")) {
+				if (loginList.contains(loginInput)) {
+					applicationFrame.setContentPane(employeePanel);
+					applicationFrame.invalidate();
+					applicationFrame.validate();
+				} else {
+					JOptionPane.showMessageDialog(null, "Incorrect Password!", "Input Error", JOptionPane.WARNING_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Incorrect Username!", "Input Error", JOptionPane.WARNING_MESSAGE);
+			}
+
+			loginList.clear();
+			empCode = applicationUser.getText();
+			applicationUser.setText("");
+			applicationPass.setText("");
 		}
 	}
 
@@ -809,7 +859,6 @@ public class ApplicationGUI {
 						projCode = "0001";
 						clockinDate = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
 						clockStore = (empCode + "_" + workCode + "_" + projCode + "_" + clockinDate + "_" + clockinTime + "_" + clockinHour);
-						System.out.println(clockStore);
 						clockOut = true;
 
 					}
@@ -990,8 +1039,8 @@ public class ApplicationGUI {
 				adminCodeLabel.setText("Compassionate Leave");
 				employeeCodeLabel.setText("Compassionate Leave");
 			} else if (adminWorkCode.getText().equals("999995") | employeeWorkCode.getText().equals("999995")) {
-				adminCodeLabel.setText("Other");
-				employeeCodeLabel.setText("Other");
+				adminCodeLabel.setText("Other - Enter Desc");
+				employeeCodeLabel.setText("Other - Enter Desc");
 			} else if (adminWorkCode.getText().equals("100810") | employeeWorkCode.getText().equals("100810")) {
 				adminCodeLabel.setText("Task 1");
 				employeeCodeLabel.setText("Task 1");
@@ -1043,7 +1092,6 @@ public class ApplicationGUI {
 				if (approvalProgress == false) {
 					approveList = toApprove.get(0);
 					splitApprove = approveList.split("_");
-					
 					split1 = splitApprove[0];
 					split2 = splitApprove[1];
 					split3 = splitApprove[2];
@@ -1104,7 +1152,7 @@ public class ApplicationGUI {
 					split6 = "";
 					split7 = "";
 					split8 = "";
-					split9 = "";
+					split9 ="";
 
 				}
 
@@ -1140,7 +1188,7 @@ public class ApplicationGUI {
 	class approvalCancelHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(approvalProgress) {
-				
+
 				approvalOne.setText("-");
 				approvalTwo.setText("-");
 				approvalThree.setText("-");
@@ -1161,7 +1209,7 @@ public class ApplicationGUI {
 				split7 = "";
 				split8 = "";
 				split9 = "";
-				
+
 				approvalProgress = false;
 
 			} else {
