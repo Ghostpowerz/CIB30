@@ -1,6 +1,6 @@
 function checkForm(e){
 	var workCode = document.getElementById("workCode").value;
-		if(workCode!=511){
+		if(workCode!=999995){
 			document.getElementById("workDescription").disabled = true;
 		}else{
 			document.getElementById("workDescription").disabled = false;
