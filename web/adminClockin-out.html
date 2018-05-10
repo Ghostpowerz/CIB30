@@ -61,8 +61,8 @@
                                                     <label class="sr-only">Work descriptiopn</label>
                                                     <input type="text" id='workDescription' class="form-control" placeholder="Description">
                                                 </div>
-                                                <button type="submit" id="btnClockIn" class="btn btn-success ">Clock in</button>
-                                                <button type="submit" id="btnClockOut" class="btn btn-success ">Clock out</button>
+                                                <button type="submit" id="btnClockIn" onclick="clockInOut()" class="btn btn-success ">Clock in</button>
+                                                <button type="submit" id="btnClockOut" onclick="clockInOut()" class="btn btn-success ">Clock out</button>
                                                 <button type="submit" onclick="helpFunction()" id="helpBtn" class="btn btn-success ">HELP</button>
                                             </form>
                                         </div>
@@ -79,7 +79,6 @@
                             </div>
                         </div>
                     </section>
-                    <div id="help">Codes: <br>Lunch:999999 ; Annual Leave 999998 ; Sickness: 999997 ; Compassionete Leave: 999996 </div>
                     <!-- ============ FOOTER SECTION ============== -->
                     <div class="footer">
                         <p><img src="imgs/kingfisher.png" alt="logo" style="width:100px;height:25px"> © Kingfisher plc 2018, Company number 01664812. Registered in England, 3 Sheldon Square, Paddington, London, W2 6PX</p>

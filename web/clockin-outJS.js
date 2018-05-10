@@ -23,6 +23,14 @@ function submitAssignment(){
 	alert("Successfully assigned.")
 }
 
+function clockInOut(){
+	alert("Clocking accepted.")
+}
+
+function helpFunction(){
+	alert("Codes: \n\n - Lunch: 999999; \n - Annual Leave: 999998; \n - Sickness: 999997; \n - Compassionete Leave: 999996.")
+}
+
 function logInFunction(){
 	var username = document.getElementById("usernameField").value;
 	var password = document.getElementById("passwordField").value;
@@ -35,24 +43,21 @@ function logInFunction(){
 	}
 }
 
-// Get the modal
-var modal = document.getElementById('codesModal');
+var input = document.getElementById("usernameField");
+input.addEventListener("keyup",function(event) {
+	event.preventDefault();
+		if(event.keyCode === 13){
+	document.getElementById("logInBtn").click();
+	}
+});
 
-// Get the button that opens the modal
-var btn = document.getElementById("helpBtn");
+var input = document.getElementById("passwordField");
+input.addEventListener("keyup",function(event) {
+	event.preventDefault();
+		if(event.keyCode === 13){
+	document.getElementById("logInBtn").click();
+	}
+});
 
-// Get the <span> element that closes the modal
-var closeBtn = document.getElementsByClassName("closeBtn")[0];
 
-btn.addEventListener('click', openModal);
-
-closeBtn.addEventListener('click', closeModal);
-
-function openModal(){
-	modal.style.display = 'block';
-}
-
-function closeModal(){
-	modal.style.display = 'none';
-}
 
