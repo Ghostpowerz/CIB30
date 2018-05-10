@@ -28,7 +28,7 @@ function clockInOut(){
 }
 
 function helpFunction(){
-	alert("Codes: \n\n - Lunch: 999999; \n - Annual Leave: 999998; \n - Sickness: 999997; \n - Compassionete Leave: 999996.")
+	alert("CLOCK IN/OUT SYSTEM\n\n Employee Codes: \n\n - Lunch: 999999; \n - Annual Leave: 999998; \n - Sickness: 999997; \n - Compassionete Leave: 999996. \n - Other: 999995 \n-------------------------\n TASK CODES: \n Task1: 100810 \n Task2: 100374 \n Task3: 990873 \n Task4: 200713 \n Task5: 201937 \n -------------------------\n ACTIVITY CODES: \n Activity 1: A0N001 \n Activity 2: A0N002 \n Activity 3: A0N003 \n Activity 4: A0N004 \n Activity 5: A0N005 \n  ")
 }
 
 function logInFunction(){
@@ -58,6 +58,4 @@ input.addEventListener("keyup",function(event) {
 	document.getElementById("logInBtn").click();
 	}
 });
-
-
 
