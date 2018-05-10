@@ -59,3 +59,74 @@ input.addEventListener("keyup",function(event) {
 	}
 });
 
+function downloadCSV(csv, fileName){
+	var csvFile;
+	var downloadLink;
+	
+	csvFile = new Blob([csv], {type:"text/csv"});
+	downloadLink = document.createElement("a");
+	downloadLink.download = fileName;
+	downloadLink.href = window.URL.createObjectURL(csvFile);
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+	
+	downloadLink.click();
+}
+
+function exportTableToCSV(fileName){
+	var csv = [];
+	var rows = document.querySelectorAll("table tr");
+	for (var i = 0; i< rows.length; i++){
+		var row = [], cols = rows[i].querySelectorAll("td, th");
+		for(var j = 0; j< cols.length; j++)
+			row.push(cols[j].innerText);
+		csv.push(row.join(","));
+	}
+	downloadCSV(csv.join("\n"), fileName);
+}
+
+function downloadXML(xml, fileName){
+	var xmlFile;
+	var downloadLink;
+	
+	xmlFile = new Blob([xml], {type:"text/xml"});
+	downloadLink = document.createElement("a");
+	downloadLink.download = fileName;
+	downloadLink.href = window.URL.createObjectURL(xmlFile);
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+	
+	downloadLink.click();
+}
+
+function exportTableToXML(fileName){
+	var xml = [];
+	var rows = document.querySelectorAll("table tr");
+	for (var i = 0; i< rows.length; i++){
+		var row = [], cols = rows[i].querySelectorAll("td, th");
+		for(var j = 0; j< cols.length; j++)
+			row.push(cols[j].innerText);
+		xml.push(row.join(","));
+	}
+	downloadCSV(xml.join("\n"), fileName);
+}
+
+function checkReport(){
+	var selection = document.getElementById("reportSelection");
+	var selectionResult = selection.options[selection.selectedIndex].text;
+	if(selectionResult == "Report 1"){
+		window.open("/reports/showReport1.php","_self");
+	}else if(selectionResult == "Report 2"){
+		window.open("/reports/showReport2.php","_self");
+	}else if(selectionResult == "Report 3"){
+		window.open("/reports/showReport3.php","_self");
+	}else if(selectionResult == "Report 4"){
+		window.open("/reports/showReport4.php","_self");
+	}else if(selectionResult == "Report 5"){
+		window.open("/reports/showReport5.php","_self");
+	}else if(selectionResult == "Report 6"){
+		window.open("/reports/showReport6.php","_self");
+	}
+}
+	
+

@@ -53,7 +53,7 @@
                                             <form action="" class="form-inline justify-content-center">
                                                 <div class="form-group">
                                                     <h3>Report:</h3>
-                                                    <select>
+                                                    <select id="reportSelection">
                                                         <option value="Report 1">Report 1</option>
                                                         <option value="Report 2">Report 2</option>
                                                         <option value="Report 3">Report 3</option>
@@ -72,7 +72,7 @@
                                                     <h3>Finish date and time:</h3>
                                                     <input type="date" name="finishDate"><input type="time" name="finishDate">
                                                 </div>
-                                                <a href="showReport.html" class="btn btn-success" role="button">Show</a>
+                                                <button onclick="checkReport()" class="btn btn-success" type="button">Show</button>
                                             </form>
                                         </div>
                                         <br>
